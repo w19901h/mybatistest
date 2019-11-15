@@ -382,6 +382,7 @@ public class MyBatisGenerator {
     private void writeFile(File file, String content, String fileEncoding) throws IOException {
         FileOutputStream fos = new FileOutputStream(file, false);
         OutputStreamWriter osw;
+
         if (fileEncoding == null) {
             osw = new OutputStreamWriter(fos);
         } else {

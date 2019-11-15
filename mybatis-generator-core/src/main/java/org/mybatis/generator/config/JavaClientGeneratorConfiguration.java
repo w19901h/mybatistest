@@ -30,7 +30,7 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
     private String targetPackage;
     private String implementationPackage;
     private String targetProject;
-
+    //Set<FullyQualifiedJavaType> getSuperInterfaceTypes()
     /**
      *  
      */

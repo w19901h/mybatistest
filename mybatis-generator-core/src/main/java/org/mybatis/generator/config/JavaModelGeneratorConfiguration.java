@@ -73,7 +73,7 @@ public class JavaModelGeneratorConfiguration extends PropertyHolder {
 
     public void validate(List<String> errors, String contextId) {
         if (!stringHasValue(targetProject)) {
-            errors.add(getString("ValidationError.0", contextId)); //$NON-NLS-1$
+            errors.add(getString("ValidationError.31", contextId)); //$NON-NLS-1$
         }
 
         if (!stringHasValue(targetPackage)) {

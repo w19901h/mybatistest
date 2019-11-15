@@ -50,7 +50,9 @@ import org.mybatis.generator.config.IgnoredColumnException;
 import org.mybatis.generator.config.IgnoredColumnPattern;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
+import org.mybatis.generator.config.JavaControllerGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
+import org.mybatis.generator.config.JavaServiceGeneratorConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.PluginConfiguration;
@@ -196,7 +198,11 @@ public class MyBatisGeneratorConfigurationParser {
                 parseConnectionFactory(context, childNode);
             } else if ("javaModelGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseJavaModelGenerator(context, childNode);
-            } else if ("javaTypeResolver".equals(childNode.getNodeName())) { //$NON-NLS-1$
+            }else if ("javaServiceGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseJavaServiceGenerator(context, childNode);
+            }else if ("javaControllerGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseJavaControllerGenerator(context, childNode);
+            }else if ("javaTypeResolver".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseJavaTypeResolver(context, childNode);
             } else if ("sqlMapGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseSqlMapGenerator(context, childNode);
@@ -612,6 +618,58 @@ public class MyBatisGeneratorConfigurationParser {
 
             if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseProperty(javaModelGeneratorConfiguration, childNode);
+            }
+        }
+    }
+    
+    protected void parseJavaServiceGenerator(Context context, Node node) {
+        JavaServiceGeneratorConfiguration javaServiceGeneratorConfiguration = new JavaServiceGeneratorConfiguration();
+
+        context.setJavaServiceGeneratorConfiguration(javaServiceGeneratorConfiguration);
+
+        Properties attributes = parseAttributes(node);
+        String targetPackage = attributes.getProperty("targetPackage"); //$NON-NLS-1$
+        String targetProject = attributes.getProperty("targetProject"); //$NON-NLS-1$
+
+        javaServiceGeneratorConfiguration.setTargetPackage(targetPackage);
+        javaServiceGeneratorConfiguration.setTargetProject(targetProject);
+
+        NodeList nodeList = node.getChildNodes();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node childNode = nodeList.item(i);
+
+            if (childNode.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+
+            if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseProperty(javaServiceGeneratorConfiguration, childNode);
+            }
+        }
+    }
+    
+    protected void parseJavaControllerGenerator(Context context, Node node) {
+        JavaControllerGeneratorConfiguration javaControllerGeneratorConfiguration = new JavaControllerGeneratorConfiguration();
+
+        context.setJavaControllerGeneratorConfiguration(javaControllerGeneratorConfiguration);
+
+        Properties attributes = parseAttributes(node);
+        String targetPackage = attributes.getProperty("targetPackage"); //$NON-NLS-1$
+        String targetProject = attributes.getProperty("targetProject"); //$NON-NLS-1$
+
+        javaControllerGeneratorConfiguration.setTargetPackage(targetPackage);
+        javaControllerGeneratorConfiguration.setTargetProject(targetProject);
+
+        NodeList nodeList = node.getChildNodes();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node childNode = nodeList.item(i);
+
+            if (childNode.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+
+            if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseProperty(javaControllerGeneratorConfiguration, childNode);
             }
         }
     }

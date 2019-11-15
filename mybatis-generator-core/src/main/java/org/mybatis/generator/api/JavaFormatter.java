@@ -34,4 +34,5 @@ public interface JavaFormatter {
     void setContext(Context context);
 
     String getFormattedContent(CompilationUnit compilationUnit);
+
 }

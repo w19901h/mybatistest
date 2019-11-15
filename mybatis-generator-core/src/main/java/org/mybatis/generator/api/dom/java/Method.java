@@ -123,6 +123,7 @@ public class Method extends JavaElement {
     public void addBodyLine(String line) {
         bodyLines.add(line);
     }
+    
 
     /**
      * Adds the body line.
